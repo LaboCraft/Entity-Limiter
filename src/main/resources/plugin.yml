@@ -1,0 +1,17 @@
+name: MineCart-Limiter
+version: '${project.version}'
+main: com.expectale.minecartlimiter.MineCartLimiter
+api-version: 1.18
+authors: [ blabouille ]
+description: allows you to limit minecart
+website: labocraft.fr
+
+commands:
+  ml:
+    permission: minecartlimiter.use
+    description: This command is used to limit the number of minecrats in a chunk
+
+permissions:
+  minecartlimiter.use:
+    description: Use MineCart-Limiter plugin
+    default: op

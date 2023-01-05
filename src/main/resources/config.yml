@@ -1,0 +1,34 @@
+Chunk:
+  # The maximum number of minecarts that can be in a chunk,
+  # if higher, all minecarts will be removed!
+  Trigger: 40
+  # Do you want to check every x ('Refersh') minutes if there are more minecarts
+  # than 'Trigger' in a chunk?
+  Task:
+    # Do you want to enable this task?
+    Enabled: false
+    # How often should the check be done? ( Recommended 5 )
+    Refresh: 10
+
+Checks:
+  # List of worlds where minecarts should not be removed
+  DisabledWorlds:
+    - 'world_disabled'
+  # List of words that, if present in the name of the minecart,
+  # prohibit its removal
+  DisableIfNameContains:
+    - 'CustomName'
+
+# TPS Meter will allow you to analyze the tps every tick,
+# if they are lower than the preset value in 'Trigger' the MineCart
+# will be cleared only if they are more than 'Chunk -> Trigger' in a single chunk
+TPSMeter:
+  # Do you want to enable this feature?
+  Enabled: false
+  # Under how many TPS must the server go down to trigger this event? ( Recommended 17 )
+  Trigger: 17
+
+Discord:
+  Enabled: false
+  # The token of the bot that sends you the notification
+  Webhook: ""

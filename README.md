@@ -21,9 +21,9 @@ This project was inspired by the work on [ArmorStand-Limiter](https://github.com
 
 # Support
 
-[![support image](https://www.heroxwar.com/discordLogo.png)](https://discord.com/invite/3QGe3ts)
+[![support image](https://www.heroxwar.com/discordLogo.png)](https://discord.gg/5qQbJq45QY)
 
-**[https://discord.com/invite/3QGe3ts](https://discord.com/invite/3QGe3ts)**
+**[https://discord.com/invite/3QGe3ts](https://discord.gg/5qQbJq45QY)**
 
 
 # Download

@@ -11,7 +11,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 
 public class Checker {
@@ -100,21 +102,43 @@ public class Checker {
         }
     }
 
-    public static void sendInGameCheck(Player player, Chunk chunk, EntityType type) {
-        final EntityLimiterConfiguration configuration = EntityLimiter.getINSTANCE().getConfiguration();
+    public static List<Chunk> getChunksAround(Chunk chunk, int radius) {
+        int chunkX = chunk.getX();
+        int chunkZ = chunk.getZ();
+        int minX = chunkX - radius;
+        int minZ = chunkZ - radius;
+        int maxX = chunkX + radius;
+        int maxZ = chunkZ + radius;
+
+        List<Chunk> chunks = new ArrayList<>();
+        for (int x = minX; x <= maxX; x++) {
+            for (int z = minZ; z <= maxZ; z++) {
+                chunks.add(chunk.getWorld().getChunkAt(x, z));
+            }
+        }
+
+        return chunks;
+    }
+
+    public static void sendInGameCheck(Player player, List<Chunk> chunks, EntityType type) {
         StringBuilder players = new StringBuilder();
 
-        for (Entity entity : chunk.getWorld().getNearbyLivingEntities(new Location(chunk.getWorld(), chunk.getX() * 16, 150, chunk.getZ() * 16), 150)) {
+        Chunk centerChunk = chunks.get(chunks.size() / 2);
+        for (Entity entity : centerChunk.getWorld().getNearbyLivingEntities(new Location(centerChunk.getWorld(), centerChunk.getX() * 16, 150, centerChunk.getZ() * 16), 150)) {
             if (entity instanceof Player) {
                 players.append(" ").append(entity.getName());
             }
         }
-        player.sendMessage(ChatColor.YELLOW + "Check Entity Limiter :");
-        player.sendMessage(ChatColor.GRAY + "- World " + chunk.getWorld().getName());
-        player.sendMessage(ChatColor.GRAY + "- X " + chunk.getX() * 16);
-        player.sendMessage(ChatColor.GRAY + "- Z " + chunk.getZ() * 16);
-        player.sendMessage(ChatColor.GRAY + "- Nearby players (150 blocks) " + ((players.length() == 0) ? "NONE" : players.toString()));
-        player.sendMessage(ChatColor.GRAY + "- Counter " + countEntityInChunk(chunk, type) +  "/" + configuration.getChunkLimit());
+        int counter = 0;
+        for (Chunk chunk : chunks) {
+            counter += countEntityInChunk(chunk, type);
+        }
+        player.sendMessage(ChatColor.YELLOW + "Check Entity Limiter (" + type.toString() + ") :");
+        player.sendMessage(ChatColor.GRAY + "- World " + centerChunk.getWorld().getName());
+        player.sendMessage(ChatColor.GRAY + "- X " + centerChunk.getX() * 16);
+        player.sendMessage(ChatColor.GRAY + "- Z " + centerChunk.getZ() * 16);
+        player.sendMessage(ChatColor.GRAY + "- Nearby players (150 blocks) " + ((players.length() == 0) ? (ChatColor.RED + "NONE") : players.toString()));
+        player.sendMessage(ChatColor.GRAY + "- Counter " + counter);
     }
 
     public static void sendInGameAlert(Player player, Chunk chunk, EntityType type) {
@@ -145,8 +169,8 @@ public class Checker {
         }
 
         DiscordWebhook webhook = new DiscordWebhook(configuration.getDiscordWebhook());
-        webhook.setAvatarUrl("https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/OOjs_UI_icon_alert-warning.svg/1024px-OOjs_UI_icon_alert-warning.svg.png");
-        webhook.setUsername("Alert !");
+        webhook.setAvatarUrl("https://labocraft.fr/storage/img/logo64x64.png");
+        webhook.setUsername("Entity-Limiter");
         webhook.setTts(false);
         webhook.addEmbed(new DiscordWebhook.EmbedObject()
                         .setTitle("A significant number of entites ("+ type.toString() +")  have been removed")
@@ -157,7 +181,7 @@ public class Checker {
                         .addField("Z", chunk.getZ() * 16 + "", false)
                         .addField("Nearby players (150 blocks)", (players.length() == 0) ? "NONE" : players.toString(), false)
                         .addField("Counter", countEntityInChunk(chunk, type) +  "/" + configuration.getChunkLimit(), false)
-                        .setAuthor("Entity-Limiter", "https://labocraft.fr", "https://labocraft.fr/storage/img/logo64x64.png")
+                        .setAuthor("Entity-Limiter Alert", "https://labocraft.fr", "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/OOjs_UI_icon_alert-warning.svg/1024px-OOjs_UI_icon_alert-warning.svg.png")
         );
         try {
             webhook.execute();

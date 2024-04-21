@@ -33,7 +33,7 @@ public final class EntityLimiter extends JavaPlugin {
     public void onEnable() {
         INSTANCE = this;
         reloadConfig();
-        getCommand("ml").setExecutor(new EntityLimiterCommand());
+        getCommand("entity-limiter").setExecutor(new EntityLimiterCommand());
         getServer().getPluginManager().registerEvents(new EntityListener(), this);
         getLogger().info("EntityLimiter is enabled");
     }

@@ -1,7 +1,9 @@
 package com.expectale.entitylimiter.configuration;
 
+import com.expectale.entitylimiter.EntityLimiter;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.EntityType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,7 @@ public class EntityLimiterConfiguration {
 
     private List<String> disabledWorlds = new ArrayList<>();
     private List<String> disableIfNameContains = new ArrayList<>();
+    private List<EntityType> entityType = new ArrayList<>();
 
     private boolean TPSMeter = false;
     private int TPSMeterTrigger = 17;
@@ -52,6 +55,22 @@ public class EntityLimiterConfiguration {
             }
             if (checksConfiguration != null && checksConfiguration.isList("DisableIfNameContains")) {
                 disableIfNameContains = checksConfiguration.getStringList("DisableIfNameContains");
+            }
+        }
+
+        if (configuration.isConfigurationSection("Entity")) {
+            ConfigurationSection checksConfiguration = configuration.getConfigurationSection("Entity");
+            if (checksConfiguration != null && checksConfiguration.isList("Entities")) {
+                List<String> entities = checksConfiguration.getStringList("Entities");
+                entityType.clear();
+                for (String entity : entities) {
+                    EntityType type = EntityType.fromName(entity);
+                    if (type != null) {
+                        entityType.add(type);
+                    } else {
+                        EntityLimiter.getINSTANCE().getLogger().warning("Invalid entity type : " + entity);
+                    }
+                }
             }
         }
 
@@ -94,6 +113,10 @@ public class EntityLimiterConfiguration {
 
     public List<String> getDisableIfNameContains() {
         return disableIfNameContains;
+    }
+
+    public List<EntityType> getEntityType() {
+        return entityType;
     }
 
     public boolean isTPSMeter() {

@@ -7,7 +7,8 @@ description: allows you to limit entity
 website: labocraft.fr
 
 commands:
-  ml:
+  entity-limiter:
+    aliases: [ "el" ]
     permission: entitylimiter.use
     description: This command is used to limit the number of entities in a chunk
 

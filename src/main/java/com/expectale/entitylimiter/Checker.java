@@ -17,7 +17,7 @@ import java.util.HashSet;
 public class Checker {
 
     private static BukkitRunnable task = null;
-    private static HashSet<Chunk> chunksCheched = new HashSet<>();
+    private static final HashSet<Chunk> chunksCheched = new HashSet<>();
 
     public static void start() {
         final EntityLimiterConfiguration configuration = EntityLimiter.getINSTANCE().getConfiguration();
@@ -27,12 +27,14 @@ public class Checker {
             @Override
             public void run() {
                 if (configuration.isTPSMeter() && Bukkit.getTPS()[0] < configuration.getTPSMeterTrigger()) {
-                    removeEntities(EntityType.BOAT);
-                    removeEntities(EntityType.MINECART);
+                    for (EntityType type : EntityLimiter.getINSTANCE().getConfiguration().getEntityType()) {
+                        removeEntities(type);
+                    }
                 }
                 if (configuration.isChunkTask() && System.currentTimeMillis() > lastChunkCheck + (long) configuration.getChunkTaskRefresh() * 60 * 1000) {
-                    removeEntities(EntityType.BOAT);
-                    removeEntities(EntityType.MINECART);
+                    for (EntityType type : EntityLimiter.getINSTANCE().getConfiguration().getEntityType()) {
+                        removeEntities(type);
+                    }
                     lastChunkCheck = System.currentTimeMillis();
                 }
                 chunksCheched.clear();

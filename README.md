@@ -17,7 +17,7 @@ This project was inspired by the work on [ArmorStand-Limiter](https://github.com
 
 ## Commands
 * **/ml reload** - *Reload the config file (Perms: `entitylimiter.use`)*
-* **/asl check** - *Show how many minecart/boat/armorstand there are in your actual chunk (Perms: `entitylimiter.use`)*
+* **/ml check** - *Show how many minecart/boat/armorstand there are in your actual chunk (Perms: `entitylimiter.use`)*
 
 # Support
 
@@ -27,4 +27,4 @@ This project was inspired by the work on [ArmorStand-Limiter](https://github.com
 
 
 # Download
-**[https://github.com/LaboCraft/Minecart-Limiter/releases/tag/latest](https://github.com/LaboCraft/Minecart-Limiter/releases/tag/latest)**
+**[https://github.com/LaboCraft/Entity-Limiter/releases/tag/latest](https://github.com/LaboCraft/Entity-Limiter/releases/tag/latest)**

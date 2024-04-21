@@ -19,6 +19,13 @@ Checks:
   DisableIfNameContains:
     - 'CustomName'
 
+Entity:
+  # Entity type to check seen : https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/entity/EntityType.html
+  Entities:
+    - BOAT
+    - ARMOR_STAND
+    - MINECART
+
 # TPS Meter will allow you to analyze the tps every tick,
 # if they are lower than the preset value in 'Trigger' the Entity
 # will be cleared only if they are more than 'Chunk -> Trigger' in a single chunk

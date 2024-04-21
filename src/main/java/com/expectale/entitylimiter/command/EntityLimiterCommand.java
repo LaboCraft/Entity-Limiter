@@ -19,9 +19,9 @@ public class EntityLimiterCommand implements CommandExecutor {
                 sender.sendMessage(ChatColor.YELLOW + "The configuration file has been successfully reloaded");
             } else if (args.length == 1 && args[0].equalsIgnoreCase("check")) {
                 sender.sendMessage(ChatColor.YELLOW + "SOON");
-                Checker.sendInGameCheck((Player)sender, ((Player)sender).getChunk(), EntityType.MINECART);
-                Checker.sendInGameCheck((Player)sender, ((Player)sender).getChunk(), EntityType.BOAT);
-                Checker.sendInGameCheck((Player)sender, ((Player)sender).getChunk(), EntityType.ARMOR_STAND);
+                for (EntityType type : EntityLimiter.getINSTANCE().getConfiguration().getEntityType()) {
+                    Checker.sendInGameCheck((Player)sender, ((Player)sender).getChunk(), type);
+                }
             } else {
                 sender.sendMessage(ChatColor.YELLOW + "Usage Entity Limiter : ");
                 sender.sendMessage(ChatColor.GRAY + "- /ml reload ");

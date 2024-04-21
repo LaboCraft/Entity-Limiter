@@ -27,4 +27,4 @@ This project was inspired by the work on [ArmorStand-Limiter](https://github.com
 
 
 # Download
-**[https://github.com/LaboCraft/Entity-Limiter/releases/tag/latest](https://github.com/LaboCraft/Entity-Limiter/releases/tag/latest)**
+**[https://github.com/LaboCraft/Entity-Limiter/releases/latest](https://github.com/LaboCraft/Entity-Limiter/releases/latest)**

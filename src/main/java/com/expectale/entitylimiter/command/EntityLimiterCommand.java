@@ -1,30 +1,29 @@
-package com.expectale.minecartlimiter.command;
+package com.expectale.entitylimiter.command;
 
-import com.expectale.minecartlimiter.Checker;
-import com.expectale.minecartlimiter.MineCartLimiter;
-import com.expectale.minecartlimiter.utilis.DiscordWebhook;
+import com.expectale.entitylimiter.Checker;
+import com.expectale.entitylimiter.EntityLimiter;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
-import java.awt.*;
-import java.io.IOException;
-
-public class MinecartLimiterCommand implements CommandExecutor {
+public class EntityLimiterCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
 
         if (sender instanceof Player) {
             if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
-                MineCartLimiter.getINSTANCE().reloadConfig();
+                EntityLimiter.getINSTANCE().reloadConfig();
                 sender.sendMessage(ChatColor.YELLOW + "The configuration file has been successfully reloaded");
             } else if (args.length == 1 && args[0].equalsIgnoreCase("check")) {
                 sender.sendMessage(ChatColor.YELLOW + "SOON");
-                Checker.sendInGameCheck((Player)sender, ((Player)sender).getChunk());
+                Checker.sendInGameCheck((Player)sender, ((Player)sender).getChunk(), EntityType.MINECART);
+                Checker.sendInGameCheck((Player)sender, ((Player)sender).getChunk(), EntityType.BOAT);
+                Checker.sendInGameCheck((Player)sender, ((Player)sender).getChunk(), EntityType.ARMOR_STAND);
             } else {
-                sender.sendMessage(ChatColor.YELLOW + "Usage Minecart Limiter : ");
+                sender.sendMessage(ChatColor.YELLOW + "Usage Entity Limiter : ");
                 sender.sendMessage(ChatColor.GRAY + "- /ml reload ");
                 sender.sendMessage(ChatColor.GRAY + "- /ml check");
             }

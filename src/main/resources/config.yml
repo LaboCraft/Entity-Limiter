@@ -1,8 +1,8 @@
 Chunk:
-  # The maximum number of minecarts that can be in a chunk,
-  # if higher, all minecarts will be removed!
+  # The maximum number of entities that can be in a chunk,
+  # if higher, all entities will be removed!
   Trigger: 40
-  # Do you want to check every x ('Refersh') minutes if there are more minecarts
+  # Do you want to check every x ('Refersh') minutes if there are more entities
   # than 'Trigger' in a chunk?
   Task:
     # Do you want to enable this task?
@@ -11,16 +11,16 @@ Chunk:
     Refresh: 10
 
 Checks:
-  # List of worlds where minecarts should not be removed
+  # List of worlds where entities should not be removed
   DisabledWorlds:
     - 'world_disabled'
-  # List of words that, if present in the name of the minecart,
+  # List of words that, if present in the name of the entity,
   # prohibit its removal
   DisableIfNameContains:
     - 'CustomName'
 
 # TPS Meter will allow you to analyze the tps every tick,
-# if they are lower than the preset value in 'Trigger' the MineCart
+# if they are lower than the preset value in 'Trigger' the Entity
 # will be cleared only if they are more than 'Chunk -> Trigger' in a single chunk
 TPSMeter:
   # Do you want to enable this feature?

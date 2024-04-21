@@ -1,23 +1,23 @@
-package com.expectale.minecartlimiter.listener;
+package com.expectale.entitylimiter.listener;
 
-import com.expectale.minecartlimiter.Checker;
-import com.expectale.minecartlimiter.MineCartLimiter;
-import com.expectale.minecartlimiter.configuration.MinecartLimiterConfiguration;
+import com.expectale.entitylimiter.Checker;
+import com.expectale.entitylimiter.EntityLimiter;
+import com.expectale.entitylimiter.configuration.EntityLimiterConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.vehicle.VehicleCreateEvent;
 import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
 
-public class MineCartListener implements Listener {
+public class EntityListener implements Listener {
 
     @EventHandler
     public void onVehicleEntityCollision(VehicleEntityCollisionEvent event) {
         if (Checker.isChechedChunk(event.getVehicle().getChunk())) {
             Checker.addChechedChunk(event.getVehicle().getChunk());
-            final MinecartLimiterConfiguration configuration = MineCartLimiter.getINSTANCE().getConfiguration();
+            final EntityLimiterConfiguration configuration = EntityLimiter.getINSTANCE().getConfiguration();
             if (!configuration.getDisableIfNameContains().contains(event.getVehicle().getWorld().getName()) && !configuration.getDisabledWorlds().contains(event.getVehicle().getWorld().getName())) {
-                if (configuration.getChunkLimit() <= Checker.countMinecartInChunk(event.getVehicle().getChunk())) {
-                    Checker.removeMinecartInChunk(event.getVehicle().getChunk());
+                if (configuration.getChunkLimit() <= Checker.countEntityInChunk(event.getVehicle().getChunk(), event.getVehicle().getType())) {
+                    Checker.removeEntitiesInChunk(event.getVehicle().getChunk(), event.getVehicle().getType());
                 }
             }
         }
@@ -27,10 +27,10 @@ public class MineCartListener implements Listener {
     public void onVehicleCreate(VehicleCreateEvent event) {
         if (Checker.isChechedChunk(event.getVehicle().getChunk())) {
             Checker.addChechedChunk(event.getVehicle().getChunk());
-            final MinecartLimiterConfiguration configuration = MineCartLimiter.getINSTANCE().getConfiguration();
+            final EntityLimiterConfiguration configuration = EntityLimiter.getINSTANCE().getConfiguration();
             if (!configuration.getDisableIfNameContains().contains(event.getVehicle().getWorld().getName()) && !configuration.getDisabledWorlds().contains(event.getVehicle().getWorld().getName())) {
-                if (configuration.getChunkLimit() <= Checker.countMinecartInChunk(event.getVehicle().getChunk())) {
-                    Checker.removeMinecartInChunk(event.getVehicle().getChunk());
+                if (configuration.getChunkLimit() <= Checker.countEntityInChunk(event.getVehicle().getChunk(), event.getVehicle().getType())) {
+                    Checker.removeEntitiesInChunk(event.getVehicle().getChunk(), event.getVehicle().getType());
                 }
             }
         }

@@ -1,4 +1,4 @@
-package com.expectale.minecartlimiter.configuration;
+package com.expectale.entitylimiter.configuration;
 
 
 import org.bukkit.configuration.Configuration;

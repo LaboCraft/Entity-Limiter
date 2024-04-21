@@ -1,4 +1,4 @@
-package com.expectale.minecartlimiter.configuration;
+package com.expectale.entitylimiter.configuration;
 
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
@@ -6,7 +6,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MinecartLimiterConfiguration {
+public class EntityLimiterConfiguration {
     private Configuration configuration;
     private int chunkLimit = 0;
     private boolean chunkTask = false;
@@ -20,7 +20,7 @@ public class MinecartLimiterConfiguration {
 
     private boolean discord = false;
     private String discordWebhook = "";
-    public MinecartLimiterConfiguration(final Configuration configuration) {
+    public EntityLimiterConfiguration(final Configuration configuration) {
         reload(configuration);
     }
 

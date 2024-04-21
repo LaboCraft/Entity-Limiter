@@ -1,17 +1,17 @@
-name: MineCart-Limiter
+name: Entity-Limiter
 version: '${project.version}'
-main: com.expectale.minecartlimiter.MineCartLimiter
+main: com.expectale.entitylimiter.EntityLimiter
 api-version: 1.18
 authors: [ blabouille ]
-description: allows you to limit minecart
+description: allows you to limit entity
 website: labocraft.fr
 
 commands:
   ml:
-    permission: minecartlimiter.use
-    description: This command is used to limit the number of minecrats in a chunk
+    permission: entitylimiter.use
+    description: This command is used to limit the number of entities in a chunk
 
 permissions:
-  minecartlimiter.use:
-    description: Use MineCart-Limiter plugin
+  entitylimiter.use:
+    description: Use Entity-Limiter plugin
     default: op

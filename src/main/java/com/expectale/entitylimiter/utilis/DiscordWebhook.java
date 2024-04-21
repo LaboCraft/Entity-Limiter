@@ -1,4 +1,4 @@
-package com.expectale.minecartlimiter.utilis;
+package com.expectale.entitylimiter.utilis;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.awt.Color;

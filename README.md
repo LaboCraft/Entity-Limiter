@@ -16,8 +16,8 @@ This plugin limits the number of entity per chunk and protect you from players w
 This project was inspired by the work on [ArmorStand-Limiter](https://github.com/xSavior-of-God/ArmorStand-Limiter) who allows you to limit armor stands.
 
 ## Commands
-* **/ml reload** - *Reload the config file (Perms: `entitylimiter.use`)*
-* **/ml check** - *Show how many minecart/boat/armorstand there are in your actual chunk (Perms: `entitylimiter.use`)*
+* **/el reload** - *Reload the config file (Perms: `entitylimiter.use`)*
+* **/el check** - *Show how many minecart/boat/armorstand there are in your actual chunk (Perms: `entitylimiter.use`)*
 
 # Support
 

@@ -1,4 +1,4 @@
-package com.expectale.entitylimiter.utilis;
+package com.expectale.entitylimiter.utils;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.awt.Color;

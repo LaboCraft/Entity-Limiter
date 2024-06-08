@@ -68,7 +68,7 @@ public class EntityLimiterConfiguration {
                     if (type != null) {
                         entityType.add(type);
                     } else {
-                        EntityLimiter.getINSTANCE().getLogger().warning("Invalid entity type : " + entity);
+                        EntityLimiter.getInstance().getLogger().warning("Invalid entity type : " + entity);
                     }
                 }
             }

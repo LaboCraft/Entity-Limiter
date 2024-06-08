@@ -12,7 +12,7 @@ public final class EntityLimiter extends JavaPlugin {
 
     private static EntityLimiter INSTANCE;
 
-    public static EntityLimiter getINSTANCE() {
+    public static EntityLimiter getInstance() {
         return INSTANCE;
     }
 

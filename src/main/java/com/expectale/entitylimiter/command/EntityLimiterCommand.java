@@ -26,7 +26,7 @@ public class EntityLimiterCommand implements CommandExecutor {
 
         if (sender instanceof Player) {
             if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
-                EntityLimiter.getINSTANCE().reloadConfig();
+                EntityLimiter.getInstance().reloadConfig();
                 sender.sendMessage(ChatColor.YELLOW + "The configuration file has been successfully reloaded");
             } else if (args.length >= 1 && args[0].equalsIgnoreCase("check")) {
                 Chunk chunk = ((Player)sender).getChunk();
@@ -51,7 +51,7 @@ public class EntityLimiterCommand implements CommandExecutor {
                     }
                 }
                 List<Chunk> chunks = Checker.getChunksAround(chunk, radius);
-                for (EntityType type : EntityLimiter.getINSTANCE().getConfiguration().getEntityType()) {
+                for (EntityType type : EntityLimiter.getInstance().getConfiguration().getEntityType()) {
                     Checker.sendInGameCheck((Player)sender, chunks, type);
                 }
             } else {

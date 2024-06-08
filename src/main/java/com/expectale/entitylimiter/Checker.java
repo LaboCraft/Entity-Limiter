@@ -1,7 +1,7 @@
 package com.expectale.entitylimiter;
 
 import com.expectale.entitylimiter.configuration.EntityLimiterConfiguration;
-import com.expectale.entitylimiter.utilis.DiscordWebhook;
+import com.expectale.entitylimiter.utils.DiscordWebhook;
 import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -19,30 +19,30 @@ import java.util.List;
 public class Checker {
 
     private static BukkitRunnable task = null;
-    private static final HashSet<Chunk> chunksCheched = new HashSet<>();
+    private static final HashSet<Chunk> chunksChecked = new HashSet<>();
 
     public static void start() {
-        final EntityLimiterConfiguration configuration = EntityLimiter.getINSTANCE().getConfiguration();
+        final EntityLimiterConfiguration configuration = EntityLimiter.getInstance().getConfiguration();
 
         task = new BukkitRunnable() {
             long lastChunkCheck = System.currentTimeMillis();
             @Override
             public void run() {
                 if (configuration.isTPSMeter() && Bukkit.getTPS()[0] < configuration.getTPSMeterTrigger()) {
-                    for (EntityType type : EntityLimiter.getINSTANCE().getConfiguration().getEntityType()) {
+                    for (EntityType type : EntityLimiter.getInstance().getConfiguration().getEntityType()) {
                         removeEntities(type);
                     }
                 }
                 if (configuration.isChunkTask() && System.currentTimeMillis() > lastChunkCheck + (long) configuration.getChunkTaskRefresh() * 60 * 1000) {
-                    for (EntityType type : EntityLimiter.getINSTANCE().getConfiguration().getEntityType()) {
+                    for (EntityType type : EntityLimiter.getInstance().getConfiguration().getEntityType()) {
                         removeEntities(type);
                     }
                     lastChunkCheck = System.currentTimeMillis();
                 }
-                chunksCheched.clear();
+                chunksChecked.clear();
             }
         };
-        task.runTaskTimer(EntityLimiter.getINSTANCE(), 20, 20);
+        task.runTaskTimer(EntityLimiter.getInstance(), 20, 20);
     }
 
     public static void stop() {
@@ -52,12 +52,12 @@ public class Checker {
         }
     }
 
-    public static void addChechedChunk(Chunk chunk) {
-        chunksCheched.add(chunk);
+    public static void addCheckedChunk(Chunk chunk) {
+        chunksChecked.add(chunk);
     }
 
-    public static boolean isChechedChunk(Chunk chunk) {
-        return !chunksCheched.contains(chunk);
+    public static boolean isCheckedChunk(Chunk chunk) {
+        return !chunksChecked.contains(chunk);
     }
 
     public static int countEntityInChunk(Chunk chunk, EntityType type) {
@@ -72,7 +72,7 @@ public class Checker {
     }
 
     public static void removeEntitiesInChunk(Chunk chunk, EntityType type) {
-        final EntityLimiterConfiguration configuration = EntityLimiter.getINSTANCE().getConfiguration();
+        final EntityLimiterConfiguration configuration = EntityLimiter.getInstance().getConfiguration();
 
         if (configuration.isDiscord() && !configuration.getDiscordWebhook().isEmpty()) {
             sendDiscordAlert(chunk, type);
@@ -90,7 +90,7 @@ public class Checker {
     }
 
     public static void removeEntities(EntityType type) {
-        final EntityLimiterConfiguration configuration = EntityLimiter.getINSTANCE().getConfiguration();
+        final EntityLimiterConfiguration configuration = EntityLimiter.getInstance().getConfiguration();
         for (World world : Bukkit.getWorlds()) {
             if (!configuration.getDisableIfNameContains().contains(world.getName()) && !configuration.getDisabledWorlds().contains(world.getName())) {
                 for (Chunk chunk : world.getLoadedChunks()) {
@@ -142,7 +142,7 @@ public class Checker {
     }
 
     public static void sendInGameAlert(Player player, Chunk chunk, EntityType type) {
-        final EntityLimiterConfiguration configuration = EntityLimiter.getINSTANCE().getConfiguration();
+        final EntityLimiterConfiguration configuration = EntityLimiter.getInstance().getConfiguration();
         StringBuilder players = new StringBuilder();
 
         for (Entity entity : chunk.getWorld().getNearbyLivingEntities(new Location(chunk.getWorld(), chunk.getX() * 16, 150, chunk.getZ() * 16), 150)) {
@@ -159,7 +159,7 @@ public class Checker {
     }
 
     public static void sendDiscordAlert(Chunk chunk, EntityType type) {
-        final EntityLimiterConfiguration configuration = EntityLimiter.getINSTANCE().getConfiguration();
+        final EntityLimiterConfiguration configuration = EntityLimiter.getInstance().getConfiguration();
         StringBuilder players = new StringBuilder();
 
         for (Entity entity : chunk.getWorld().getNearbyLivingEntities(new Location(chunk.getWorld(), chunk.getX() * 16, 150, chunk.getZ() * 16), 150)) {
@@ -183,11 +183,16 @@ public class Checker {
                         .addField("Counter", countEntityInChunk(chunk, type) +  "/" + configuration.getChunkLimit(), false)
                         .setAuthor("Entity-Limiter Alert", "https://labocraft.fr", "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/OOjs_UI_icon_alert-warning.svg/1024px-OOjs_UI_icon_alert-warning.svg.png")
         );
-        try {
-            webhook.execute();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                try {
+                    webhook.execute();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }.runTaskAsynchronously(EntityLimiter.getInstance());
     }
 
 }

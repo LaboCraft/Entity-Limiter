@@ -35,6 +35,8 @@ TPSMeter:
   # Under how many TPS must the server go down to trigger this event? ( Recommended 17 )
   Trigger: 17
 
+Verbose: false # Activate if you want to receive in-game alerts
+
 Discord:
   Enabled: false
   # The token of the bot that sends you the notification

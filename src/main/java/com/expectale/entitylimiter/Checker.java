@@ -77,11 +77,15 @@ public class Checker {
         if (configuration.isDiscord() && !configuration.getDiscordWebhook().isEmpty()) {
             sendDiscordAlert(chunk, type);
         }
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            if (player.hasPermission("entitieslimiter.use")) {
-                sendInGameAlert(player, chunk, type);
+        
+        if (configuration.isVerbose()) {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (player.hasPermission("entitieslimiter.use")) {
+                    sendInGameAlert(player, chunk, type);
+                }
             }
         }
+
         for (Entity entity : chunk.getEntities()) {
             if (entity.getType().equals(type) && (!entity.getType().equals(EntityType.ARMOR_STAND) || ((ArmorStand) entity).isVisible())) {
                 entity.remove();

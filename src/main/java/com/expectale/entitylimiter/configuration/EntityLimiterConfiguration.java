@@ -20,6 +20,8 @@ public class EntityLimiterConfiguration {
 
     private boolean TPSMeter = false;
     private int TPSMeterTrigger = 17;
+    
+    private boolean verbose = false;
 
     private boolean discord = false;
     private String discordWebhook = "";
@@ -84,6 +86,10 @@ public class EntityLimiterConfiguration {
             }
         }
 
+        if (configuration.isBoolean("verbose")) {
+            verbose = configuration.getBoolean("Verbose");
+        }
+
         if (configuration.isConfigurationSection("Discord")) {
             ConfigurationSection discordConfiguration = configuration.getConfigurationSection("Discord");
             if (discordConfiguration != null && discordConfiguration.isBoolean("Enabled")) {
@@ -125,6 +131,10 @@ public class EntityLimiterConfiguration {
 
     public int getTPSMeterTrigger() {
         return TPSMeterTrigger;
+    }
+
+    public boolean isVerbose() {
+        return verbose;
     }
 
     public boolean isDiscord() {
